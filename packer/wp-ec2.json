@@ -1,0 +1,25 @@
+{
+  "builders": [{
+    "type": "amazon-ebs",
+    "region": "us-east-1",
+    "source_ami": "ami-0de53d8956e8dcf80",
+    "instance_type": "t2.micro",
+    "ssh_username": "ec2-user",
+    "ami_name": "Wordpress-docker {{isotime | clean_ami_name}}",
+    "profile": "tetsuya-asu"
+  }],
+ "provisioners": [{
+    "type": "shell",
+    "inline": [
+      "sudo yum -y update",
+      "sudo yum install -y docker",
+      "sudo service docker start",
+      "sudo usermod -a -G docker ec2-user",
+      "sudo curl -L \"https://github.com/docker/compose/releases/download/1.11.2/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose",
+      "sudo chmod +x /usr/local/bin/docker-compose",
+      "sudo yum install -y zsh util-linux-user",
+      "curl -L \"https://gist.githubusercontent.com/yakult1995/a03eb69b2297a2a7c74a3f8e5f4ccfe6/raw/97b5009bda007875fa2a20edb4c29ec9a53cc0e3/.zshrc\" -o ~/.zshrc",
+      "sudo chsh -s $(which zsh) $(whoami)"
+    ]
+  }]
+}

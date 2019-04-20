@@ -5,4 +5,8 @@
 
 ./docker/db/data/*
 ./docker/wp/backup/*
-./docker/wp/log/*
+docker/wp/log/*
+
+terraform/.terraform/*
+terraform/terraform*
+terraform/variables.tf
