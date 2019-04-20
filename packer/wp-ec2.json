@@ -12,14 +12,22 @@
     "type": "shell",
     "inline": [
       "sudo yum -y update",
-      "sudo yum install -y docker",
-      "sudo service docker start",
+      "sudo yum install -y git",
+      "sudo yum -y install docker",
+      "sudo systemctl start docker",
+      "sudo systemctl enable docker",
       "sudo usermod -a -G docker ec2-user",
-      "sudo curl -L \"https://github.com/docker/compose/releases/download/1.11.2/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose",
+      "sudo curl -L \"https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose",
       "sudo chmod +x /usr/local/bin/docker-compose",
       "sudo yum install -y zsh util-linux-user",
       "curl -L \"https://gist.githubusercontent.com/yakult1995/a03eb69b2297a2a7c74a3f8e5f4ccfe6/raw/97b5009bda007875fa2a20edb4c29ec9a53cc0e3/.zshrc\" -o ~/.zshrc",
-      "sudo chsh -s $(which zsh) $(whoami)"
+      "sudo chsh -s $(which zsh) $(whoami)",
+      "git clone https://github.com/yakult1995/wordpress-nginx.git ~/wp",
+      "sudo dd if=/dev/zero of=/swapfile bs=500MB count=4",
+      "sudo chmod 600 /swapfile",
+      "sudo mkswap /swapfile",
+      "sudo swapon /swapfile",
+      "sudo sh -c \"echo '/swapfile swap swap defaults 0 0' >> /etc/fstab\""
     ]
   }]
 }
