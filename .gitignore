@@ -1,0 +1,8 @@
+.idea/*
+.env
+
+./wp/*
+
+./docker/db/data/*
+./docker/wp/backup/*
+./docker/wp/log/*

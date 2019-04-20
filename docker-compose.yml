@@ -1,0 +1,43 @@
+version: '3.4'
+
+services:
+  nginx:
+    container_name: nginx_container
+    image: wp-nginx:1.0.0
+    build: ./docker/nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./docker/nginx/conf:/etc/nginx/conf.d/
+      - ./wp:/var/www/html
+    env_file:
+      - ./docker/nginx/.env
+  db:
+    container_name: mysql_container
+    image: wp-mysql:1.0.0
+    build: ./docker/db
+    ports:
+      - 3306:3306
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+      - ./docker/db/conf:/docker-entrypoint-initdb.d
+      - ./scripts:/scripts
+    env_file:
+      - ./docker/db/.env
+
+  wp:
+    container_name: wp_container
+    image: wp-fpm:1.0.0
+    build:
+      context: .
+      dockerfile: ./docker/wp/Dockerfile
+    volumes:
+      - ./wp:/var/www/html
+      - ./docker/wp/backup:/tmp/backup
+      - ./docker/wp/log:/tmp/log
+    ports:
+      - 9000:9000
+    env_file:
+      - docker/wp/.env
+    tty: true
